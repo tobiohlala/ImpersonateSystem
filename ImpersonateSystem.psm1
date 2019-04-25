@@ -36,50 +36,57 @@ try {
         [void] [impsys.win32]
     }
 } catch {
-   Add-Type -Namespace impsys -Name win32 -MemberDefinition @"
-        [DllImport("kernel32.dll", SetLastError=true)]
-        public static extern bool CloseHandle(
-            IntPtr hHandle);
+   Add-Type -TypeDefinition @"
+        using System;
+        using System.Runtime.InteropServices;
+        namespace impsys {
+            public class win32 {
 
-        [DllImport("kernel32.dll", SetLastError=true)]
-        public static extern IntPtr OpenProcess(
-            uint processAccess,
-            bool bInheritHandle,
-            int processId);
+                [DllImport("kernel32.dll", SetLastError=true)]
+                public static extern bool CloseHandle(
+                    IntPtr hHandle);
 
-        [DllImport("advapi32.dll", SetLastError=true)]
-        public static extern bool OpenProcessToken(
-            IntPtr ProcessHandle, 
-            uint DesiredAccess,
-            out IntPtr TokenHandle);
+                [DllImport("kernel32.dll", SetLastError=true)]
+                public static extern IntPtr OpenProcess(
+                    uint processAccess,
+                    bool bInheritHandle,
+                    int processId);
 
-        [DllImport("advapi32.dll", SetLastError=true)]
-        public static extern bool DuplicateTokenEx(
-            IntPtr hExistingToken,
-            uint dwDesiredAccess,
-            IntPtr lpTokenAttributes,
-            uint ImpersonationLevel,
-            uint TokenType,
-            out IntPtr phNewToken);
+                [DllImport("advapi32.dll", SetLastError=true)]
+                public static extern bool OpenProcessToken(
+                    IntPtr ProcessHandle, 
+                    uint DesiredAccess,
+                    out IntPtr TokenHandle);
 
-        [DllImport("advapi32.dll", SetLastError=true)]
-        public static extern bool ImpersonateLoggedOnUser(
-            IntPtr hToken);
+                [DllImport("advapi32.dll", SetLastError=true)]
+                public static extern bool DuplicateTokenEx(
+                    IntPtr hExistingToken,
+                    uint dwDesiredAccess,
+                    IntPtr lpTokenAttributes,
+                    uint ImpersonationLevel,
+                    uint TokenType,
+                    out IntPtr phNewToken);
 
-        [DllImport("advapi32.dll", SetLastError=true)]
-        public static extern bool RevertToSelf();
+                [DllImport("advapi32.dll", SetLastError=true)]
+                public static extern bool ImpersonateLoggedOnUser(
+                    IntPtr hToken);
 
-        [DllImport("advapi32", SetLastError=true, CharSet=CharSet.Unicode)]
-        public static extern bool CreateProcessWithTokenW(
-            IntPtr hToken,
-            int dwLogonFlags,
-            string lpApplicationName,
-            string lpCommandLine,
-            int dwCreationFlags,
-            IntPtr lpEnvironment,
-            string lpCurrentDirectory,
-            IntPtr lpStartupInfo,
-            IntPtr lpProcessInformation);
+                [DllImport("advapi32.dll", SetLastError=true)]
+                public static extern bool RevertToSelf();
+
+                [DllImport("advapi32", SetLastError=true, CharSet=CharSet.Unicode)]
+                public static extern bool CreateProcessWithTokenW(
+                    IntPtr hToken,
+                    int dwLogonFlags,
+                    string lpApplicationName,
+                    string lpCommandLine,
+                    int dwCreationFlags,
+                    IntPtr lpEnvironment,
+                    string lpCurrentDirectory,
+                    IntPtr lpStartupInfo,
+                    IntPtr lpProcessInformation);
+            }
+        }
 "@
 }
 
