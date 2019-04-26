@@ -1,6 +1,6 @@
 # ImpersonateSystem
 
-[![PowerShell Gallery](https://img.shields.io/powershellgallery/v/ImpersonateSystem.svg)](https://www.powershellgallery.com/packages/ImpersonateSystem) ![](https://img.shields.io/badge/supported%20windows%20versions-7%2F8%2F10-blue.svg)
+[![PowerShell Gallery](https://img.shields.io/powershellgallery/v/ImpersonateSystem.svg)](https://www.powershellgallery.com/packages/ImpersonateSystem) ![](https://img.shields.io/badge/supported%20windows%20versions-7%2F8%2F10-green.svg)
 
 Impersonate Windows built-in SYSTEM account.
 
