@@ -73,18 +73,6 @@ try {
 
                 [DllImport("advapi32.dll", SetLastError=true)]
                 public static extern bool RevertToSelf();
-
-                [DllImport("advapi32", SetLastError=true, CharSet=CharSet.Unicode)]
-                public static extern bool CreateProcessWithTokenW(
-                    IntPtr hToken,
-                    int dwLogonFlags,
-                    string lpApplicationName,
-                    string lpCommandLine,
-                    int dwCreationFlags,
-                    IntPtr lpEnvironment,
-                    string lpCurrentDirectory,
-                    IntPtr lpStartupInfo,
-                    IntPtr lpProcessInformation);
             }
         }
 "@
