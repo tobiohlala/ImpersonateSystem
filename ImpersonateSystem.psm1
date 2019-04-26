@@ -1,6 +1,6 @@
 # BSD 3-Clause License
 #
-# Copy(c) 2019, Tobias Heilig
+# Copyright(c) 2019, Tobias Heilig
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
