@@ -124,19 +124,22 @@ function Invoke-AsSystem {
         Write-Error "$([ComponentModel.Win32Exception]$err)"
     }
 
-    if (-not [impsys.win32]::ImpersonateLoggedOnUser(
-            $dupTokenHandle))
-    {
-        $err = [Runtime.InteropServices.Marshal]::GetLastWin32Error()
-        Write-Error "$([ComponentModel.Win32Exception]$err)"
-    }
+    try {
+        if (-not [impsys.win32]::ImpersonateLoggedOnUser(
+                $dupTokenHandle))
+        {
+            $err = [Runtime.InteropServices.Marshal]::GetLastWin32Error()
+            Write-Error "$([ComponentModel.Win32Exception]$err)"
+        }
 
-    & $Process @ArgumentList
+        & $Process @ArgumentList
 
-    if(-not [impsys.win32]::RevertToSelf())
-    {
-        $err = [Runtime.InteropServices.Marshal]::GetLastWin32Error()
-        Write-Error "$([ComponentModel.Win32Exception]$err)"
+    } finally {
+        if(-not [impsys.win32]::RevertToSelf())
+        {
+            $err = [Runtime.InteropServices.Marshal]::GetLastWin32Error()
+            Write-Error "$([ComponentModel.Win32Exception]$err)"
+        }
     }
 
     <#
