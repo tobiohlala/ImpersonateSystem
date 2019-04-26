@@ -90,12 +90,12 @@ function Invoke-AsSystem {
         $ArgumentList
     )
 
-    $winlogon = Get-Process -Name "winlogon" | Select-Object -First 1
+    $winlogonPid = Get-Process -Name "winlogon" | Select-Object -First 1 -ExpandProperty Id
 
     if (($processHandle = [impsys.win32]::OpenProcess(
             0x400,
             $true,
-            [Int32]$winlogon.Id)) -eq [IntPtr]::Zero)
+            [Int32]$winlogonPid)) -eq [IntPtr]::Zero)
     {
         $err = [Runtime.InteropServices.Marshal]::GetLastWin32Error()
         Write-Error "$([ComponentModel.Win32Exception]$err)"
